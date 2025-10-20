@@ -23,6 +23,7 @@
                         <Button onAction="#drawKrepAction" text="Нарисовать крепь" />
                         <Button onAction="#clearCanvas" text="Очистить" />
                         <Button fx:id="exportDxfButton" text="Экспорт в DXF" onAction="#exportToDxf" layoutX="650" layoutY="50" prefWidth="120" prefHeight="30"/>
+
                     </children>
                     <padding>
                         <Insets bottom="10.0" />

@@ -33,7 +33,7 @@ public class Configs {
     protected String Put_geolog ="/com/example/proburok/docs/GeologiBurebai.pdf";
     protected String Put_instr ="/com/example/proburok/docs/instruk.pdf";
     protected String Put_othet ="/com/example/proburok/docs/Othet.pdf";
-
+    protected String Put_texusovia ="/com/example/proburok/docs/texuslovia_ubileka.pdf";
     protected String TEMPLATE_PATH1 = "/com/example/proburok/docs/template_1.docx";
     protected String TEMPLATE_PATH2 = "/com/example/proburok/docs/template_2.docx";
     protected String TEMPLATE_PATH3 = "/com/example/proburok/docs/template_3.docx";

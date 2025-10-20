@@ -11,10 +11,11 @@ public class DatabaseHandler extends Configs {
         return DriverManager.getConnection(connectionString, dbUser, dbPass); //Создает соединение с базой данных, используя строку подключения, имя пользователя (dbUser) и пароль
     }
     //добавление для проходчика в БД
-    public void Dobavlenie(String nomer, Date data, String sehen, String gorizont, String privizka,String nazvanie,String nazvanie_bd,String idi,String uhastok,String primihanie) {
+    public void Dobavlenie(String nomer, Date data, String sehen, String gorizont, String privizka,String nazvanie,String nazvanie_bd,String idi,String uhastok,String primihanie,String wid,String hid) {
         String stroka = "INSERT INTO " + Const.BAZA_TABLE + "(" + Const.BAZA_NOMER +
                 "," + Const.BAZA_DATA + "," + Const.BAZA_SHENIE + "," + Const.BAZA_GORIZONT
-                + "," + Const.BAZA_PRIVIZKA + "," + Const.BAZA_NAZVANIE + "," + Const.BAZA_NAZVANIE_BD+ ","+ Const.BAZA_IDI  +"," + Const.BAZA_UHASTOK+ "," + Const.BAZA_PRIM   + ")" + "VALUES(?,?,?,?,?,?,?,?,?,?)";
+                + "," + Const.BAZA_PRIVIZKA + "," + Const.BAZA_NAZVANIE + "," + Const.BAZA_NAZVANIE_BD+ ","+ Const.BAZA_IDI  +"," + Const.BAZA_UHASTOK+ "," + Const.BAZA_PRIM + "," + Const.BAZA_WID  + "," + Const.BAZA_HID
+                + ")" + "VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
         try (Connection connection = getDbConnection(); // подключение к бд
 
              PreparedStatement prSt = connection.prepareStatement(stroka)) {  //что именно передаем
@@ -29,6 +30,8 @@ public class DatabaseHandler extends Configs {
             prSt.setString(8, idi);
             prSt.setString(9, uhastok);
             prSt.setString(10, primihanie);
+            prSt.setString(11, wid);
+            prSt.setString(12, hid);
             prSt.executeUpdate(); //выполнить передачу
         } catch (SQLException e) {
             e.printStackTrace();
@@ -36,9 +39,9 @@ public class DatabaseHandler extends Configs {
         }
     }
 
-    public void DobavlenieGEOLOG(String kategoriya,  String opisanie,String tippas,String dlina,String gorizont, String nazvanie,String primihanie) {
+    public void DobavlenieGEOLOG(String kategoriya,  String opisanie,String sloi,String dlina,String gorizont, String nazvanie,String faktot,String opisfaktor,String primihanie) {
         String query = "UPDATE " + Const.BAZA_TABLE + " SET " + Const.BAZA_KATIGORII + " = ?, "
-                       + Const.BAZA_OPISANIE + " = ?, " + Const.BAZA_TIPPAS + " = ?, " + Const.BAZA_DLINA + " = ?, "+ Const.BAZA_PRIM + " = ? "+ "WHERE "
+                       + Const.BAZA_OPISANIE + " = ?, " + Const.BAZA_SLOI + " = ?, " + Const.BAZA_DLINA + " = ?, "+ Const.BAZA_FAKTOR + " = ?, "+ Const.BAZA_TFOPISANIE + " = ?, "+ Const.BAZA_PRIM + " = ? "+ "WHERE "
                        + Const.BAZA_GORIZONT + " = ? AND " + Const.BAZA_NAZVANIE + " = ?";
 
         try (Connection connection = getDbConnection();
@@ -47,11 +50,13 @@ public class DatabaseHandler extends Configs {
             prSt.setString(1, kategoriya);
             prSt.setString(2, opisanie);
 
-            prSt.setString(3, tippas);
+            prSt.setString(3, sloi);
             prSt.setString(4, dlina);
-            prSt.setString(5, primihanie);
-            prSt.setString(6, gorizont);
-            prSt.setString(7, nazvanie);
+            prSt.setString(5, faktot);
+            prSt.setString(6, opisfaktor);
+            prSt.setString(7, primihanie);
+            prSt.setString(8, gorizont);
+            prSt.setString(9, nazvanie);
 
             prSt.executeUpdate();
         } catch (SQLException e) {
@@ -76,17 +81,19 @@ public class DatabaseHandler extends Configs {
             throw new RuntimeException("Ошибка обновления данных: " + e.getMessage(), e);
         }
     }
-    public void DobavlenieGEOMEX(String faktor,String tippas, String gorizont, String nazvanie) {
-        String query = "UPDATE " + Const.BAZA_TABLE + " SET " + Const.BAZA_FAKTOR + " = ?, "
-                + Const.BAZA_TIPPAS + " = ? " + "WHERE " + Const.BAZA_GORIZONT + " = ? AND " + Const.BAZA_NAZVANIE + " = ?";
+    public void DobavlenieGEOMEX(String faktor,String tfopis,String tippas, String gorizont, String nazvanie,String primihanie) {
+        String query = "UPDATE " + Const.BAZA_TABLE + " SET " + Const.BAZA_FAKTOR + " = ?, "+ Const.BAZA_TFOPISANIE + " = ?, "
+                + Const.BAZA_TIPPAS + " = ?, " + Const.BAZA_PRIM + " = ? "+ "WHERE " + Const.BAZA_GORIZONT + " = ? AND " + Const.BAZA_NAZVANIE + " = ?";
 
         try (Connection connection = getDbConnection();
              PreparedStatement prSt = connection.prepareStatement(query)) {
 
             prSt.setString(1, faktor);
-            prSt.setString(2, tippas);
-            prSt.setString(3, gorizont);
-            prSt.setString(4, nazvanie);
+            prSt.setString(2, tfopis);
+            prSt.setString(3, tippas);
+            prSt.setString(4, primihanie);
+            prSt.setString(5, gorizont);
+            prSt.setString(6, nazvanie);
 
             prSt.executeUpdate();
         } catch (SQLException e) {
@@ -141,27 +148,6 @@ public class DatabaseHandler extends Configs {
         return null; // Пользователь не найден
     }
 
-    public ObservableList<User> getAllUsers() {
-        ObservableList<User> users = FXCollections.observableArrayList(); //создает список
-        String select = "SELECT * FROM " + Const.USER_TABLE; // извлечение всей инфы из бд
-
-        try (Connection connection = getDbConnection(); // подключаемся к бд
-             PreparedStatement prSt = connection.prepareStatement(select); // вставляем запрос
-             ResultSet resSet = prSt.executeQuery()) { // получаем что в БД
-
-            while (resSet.next()) { //перебираем все строки в бд
-                User user = new User();
-                user.setFirstname(resSet.getString(Const.USER_FIRSTNAME));
-                user.setLastname(resSet.getString(Const.USER_LASTNAME));
-                user.setUsername(resSet.getString(Const.USER_USERNAME));
-                users.add(user); // добавляем всё в юзера
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return users; // метод возвращает заполненный список
-    }
-
     public ObservableList<Baza> getAllBaza() {
         ObservableList<Baza> bazas = FXCollections.observableArrayList(); //создает список
         String select = "SELECT * FROM " + Const.BAZA_TABLE; // извлечение всей инфы из бд
@@ -180,6 +166,7 @@ public class DatabaseHandler extends Configs {
                 infa.setKATEGORII(resSet.getString(Const.BAZA_KATIGORII));
                 infa.setOPISANIE(resSet.getString(Const.BAZA_OPISANIE));
                 infa.setFAKTOR(resSet.getString(Const.BAZA_FAKTOR));
+                infa.setTFOPISANIE(resSet.getString(Const.BAZA_TFOPISANIE));
                 infa.setTIPPAS(resSet.getString(Const.BAZA_TIPPAS));
                 infa.setPRIVIZKA(resSet.getString(Const.BAZA_PRIVIZKA));
                 infa.setUGOL(resSet.getString(Const.BAZA_UGOL));
@@ -187,6 +174,9 @@ public class DatabaseHandler extends Configs {
                 infa.setUHASTOK(resSet.getString(Const.BAZA_UHASTOK));
                 infa.setPRIM(resSet.getString(Const.BAZA_PRIM));
                 infa.setNAME_BD(resSet.getString(Const.BAZA_NAZVANIE_BD));
+                infa.setWID(resSet.getString(Const.BAZA_WID));
+                infa.setHID(resSet.getString(Const.BAZA_HID));
+                infa.setSLOI(resSet.getString(Const.BAZA_SLOI));
                 bazas.add(infa);
 
             }
@@ -238,6 +228,7 @@ public class DatabaseHandler extends Configs {
                     infa.setKATEGORII(resSet.getString(Const.BAZA_KATIGORII));
                     infa.setOPISANIE(resSet.getString(Const.BAZA_OPISANIE));
                     infa.setFAKTOR(resSet.getString(Const.BAZA_FAKTOR));
+                    infa.setTFOPISANIE(resSet.getString(Const.BAZA_TFOPISANIE));
                     infa.setTIPPAS(resSet.getString(Const.BAZA_TIPPAS));
                     infa.setPRIVIZKA(resSet.getString(Const.BAZA_PRIVIZKA));
                     infa.setUGOL(resSet.getString(Const.BAZA_UGOL));
@@ -246,6 +237,9 @@ public class DatabaseHandler extends Configs {
                     infa.setPRIM(resSet.getString(Const.BAZA_PRIM));
                     infa.setNAME_BD(resSet.getString(Const.BAZA_NAZVANIE_BD));
                     infa.setIDI(resSet.getString(Const.BAZA_IDI));
+                    infa.setWID(resSet.getString(Const.BAZA_WID));
+                    infa.setHID(resSet.getString(Const.BAZA_HID));
+                    infa.setSLOI(resSet.getString(Const.BAZA_SLOI));
 
                     return infa;
                 }

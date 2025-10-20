@@ -5,22 +5,27 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcType;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class KrepController {
+public class KrepController extends Configs {
 
     @FXML
     private TextField widthField;
@@ -111,6 +116,7 @@ public class KrepController {
 
             drawKrep(width, height);
             infoLabel.setText("Крепь нарисована. Ширина: " + width + " м, Высота: " + height + " м");
+            exportToJpg();
 
         } catch (NumberFormatException e) {
             infoLabel.setText("Ошибка: введите числовые значения");
@@ -375,6 +381,85 @@ public class KrepController {
         writer.write("1\n" + text + "\n");
     }
 
+    private void exportToJpg() {
+        if (currentWidth == 0 || currentHeight == 0) {
+            infoLabel.setText("Ошибка: сначала нарисуйте крепь");
+            return;
+        }
+
+        try {
+
+            String desktopPath = Put;
+            String folderName = "/крепи_выработок";
+
+            // Создаем папку, если ее нет
+            File folder = new File(desktopPath + folderName);
+            if (!folder.exists()) {
+                folder.mkdirs();
+            }
+
+            // Генерируем имя файла по умолчанию
+            String defaultName = "крепь_" + currentWidth + "x" + currentHeight + "м_" +
+                    new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + ".jpg";
+
+            // Показываем диалог сохранения
+            File file = new File(folder, defaultName);
+            if (file != null) {
+                saveCanvasAsJpg(file);
+                infoLabel.setText("JPG файл сохранен: " + file.getName());
+            }
+        } catch (Exception e) {
+            infoLabel.setText("Ошибка при сохранении JPG: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    private void saveCanvasAsJpg(File file) {
+        try {
+            // 1. Создаем WritableImage для захвата содержимого Canvas
+            WritableImage writableImage = new WritableImage(
+                    (int) canvas.getWidth(),
+                    (int) canvas.getHeight()
+            );
+            // 2. Настраиваем параметры снимка
+            SnapshotParameters params = new SnapshotParameters();
+            params.setFill(Color.WHITE); // Устанавливаем белый фон
+//            SnapshotParameters настраивает как делать снимок
+//            setFill(Color.WHITE) гарантирует, что прозрачные области будут белыми
+
+            // Делаем снимок
+            WritableImage image = canvas.snapshot(params, writableImage);
+
+            // Сохраняем через BufferedImage (более надежный способ)
+            BufferedImage bufferedImage = new BufferedImage(
+                    (int) image.getWidth(),
+                    (int) image.getHeight(),
+                    BufferedImage.TYPE_INT_RGB
+            );
+
+            // 5. Конвертируем пиксели из JavaFX в AWT формат
+            for (int x = 0; x < image.getWidth(); x++) {
+                for (int y = 0; y < image.getHeight(); y++) {
+                    // Получаем цвет пикселя из JavaFX изображения
+                    javafx.scene.paint.Color fxColor = image.getPixelReader().getColor(x, y);
+                    // Конвертируем в AWT Color
+                    java.awt.Color awtColor = new java.awt.Color(
+                            (float) fxColor.getRed(),
+                            (float) fxColor.getGreen(),
+                            (float) fxColor.getBlue(),
+                            (float) fxColor.getOpacity()
+                    );
+                    // Устанавливаем пиксель в BufferedImage
+                    bufferedImage.setRGB(x, y, awtColor.getRGB());
+                }
+            }
+
+            // Сохраняем как JPG
+            ImageIO.write(bufferedImage, "jpg", file);
+
+        } catch (IOException e) {
+            throw new RuntimeException("Ошибка при сохранении JPG", e);
+        }
+    }
     public static void showKrepEditor() {
         try {
             FXMLLoader loader = new FXMLLoader(KrepController.class.getResource("krep_editor.fxml"));

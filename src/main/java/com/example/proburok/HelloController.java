@@ -25,6 +25,7 @@ public class HelloController {
     @FXML private Button loginSingUpButton1;
     @FXML private Button loginSingUpButton2;
     @FXML private Button loginSingUpButton3;
+    @FXML private Button loginSingUpButton4;
 
     @FXML private TextField login_fild;
 
@@ -33,10 +34,11 @@ public class HelloController {
 
     @FXML
     void initialize() {
-        loginSingUpButton.setVisible(false);
-        loginSingUpButton1.setVisible(false);
-        loginSingUpButton2.setVisible(false);
+        loginSingUpButton.setVisible(true);
+        loginSingUpButton1.setVisible(true);
+        loginSingUpButton2.setVisible(true);
         loginSingUpButton3.setVisible(true);
+        loginSingUpButton4.setVisible(true);
 
         authSiginButton.setOnAction(actionEvent -> {
             String loginText = login_fild.getText().trim();
@@ -53,7 +55,7 @@ public class HelloController {
         //loginSingUpButton3.setOnMouseClicked(mouseEvent -> openNewScene("/com/example/proburok/Pehat.fxml"));
 
         loginSingUpButton3.setOnMouseClicked(mouseEvent ->KrepController.showKrepEditor());
-
+        loginSingUpButton4.setOnMouseClicked(mouseEvent -> openNewScene("/com/example/proburok/Geomex.fxml"));
         loginSingUpButton.setOnAction(actionEvent -> {
             // Закрытие текущего окна
             if (loginSingUpButton.getScene() != null && loginSingUpButton.getScene().getWindow() != null) {
