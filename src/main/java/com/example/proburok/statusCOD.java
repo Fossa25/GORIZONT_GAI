@@ -60,7 +60,7 @@ public class statusCOD {
         ObservableList<String> gorizonts = dbHandler.getUniqueGorizonts();
 
                 // 2. Добавляем опцию "Все" для сброса фильтра
-        filterComboBox1.getItems().addAll("Требуется геологическое описание","Все данные внесены");
+        filterComboBox1.getItems().addAll("Требуется геологическое описание","Требуется геомеханическое описание","Все данные внесены");
 
 
         gorizonts.add(0, "Все горизонты");

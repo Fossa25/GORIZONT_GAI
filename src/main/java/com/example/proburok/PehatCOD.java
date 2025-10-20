@@ -206,7 +206,7 @@ public class PehatCOD extends ProhodCOD {
     }
     private void addTextChangeListener(TextField field) {
         field.textProperty().addListener((obs, oldVal, newVal) -> {
-            checkFieldsAndUpdateButton();
+           checkFieldsAndUpdateButton();
         });
     }
 

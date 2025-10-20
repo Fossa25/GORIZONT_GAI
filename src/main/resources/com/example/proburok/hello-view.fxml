@@ -51,7 +51,12 @@
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button fx:id="loginSingUpButton3" layoutX="14.0" layoutY="209.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="139.0" style="-fx-background-color: #aa9455; -fx-background-radius: 20px;" text="Печать" textFill="WHITE" visible="false">
+            <Button fx:id="loginSingUpButton3" layoutX="14.0" layoutY="215.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="139.0" style="-fx-background-color: #aa9455; -fx-background-radius: 20px;" text="Печать" textFill="WHITE" visible="false">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="loginSingUpButton4" layoutX="550.0" layoutY="215.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="139.0" style="-fx-background-color: #aa9455; -fx-background-radius: 20px;" text="Геомеханик" textFill="WHITE" visible="false">
                <font>
                   <Font size="14.0" />
                </font>

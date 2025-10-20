@@ -1,6 +1,4 @@
 package com.example.proburok;
-
-
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,18 +8,11 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.stage.FileChooser;
-import javafx.stage.Window;
-import javafx.util.Duration;
-
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
+import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
 public class GeologCOD extends Configs {
 
     @FXML private Button B1;
@@ -48,13 +39,16 @@ public class GeologCOD extends Configs {
     @FXML private ComboBox<String> gorbox;
     @FXML private ComboBox<String> namebox;
 
+    @FXML private ComboBox<String> cbcloi;
+
     @FXML private TextField idi;
     @FXML private ImageView instr;
     @FXML private ImageView dokumGeolog;
     @FXML private ImageView dokumGeolog11;
     @FXML private TextField dlina;
     @FXML private ImageView tabl;
-    @FXML private ImageView pethat;
+    private String faktor;
+    private String opisFaktor;
     private String tippas;
 
     public String blak= " -fx-border-color: #00000000;-fx-background-color:#00000000;-fx-border-width: 0px";
@@ -62,22 +56,21 @@ public class GeologCOD extends Configs {
 
     List<String> soprigenii = Arrays.asList("12.8/12.8", "3.7/3.7", "3.7/2.5", "14.7/14.7", "8.5/8.5", "5.8/5.8", "12.8|12.8");
 
-    public String tex1 = "Очень прочный, крупноблочный, угловатый массив. После отпалки поверхность рваная. Поверхность трещин шероховатая, цепкая, с редким заполнителем. Блоки зажаты." +
-            " При простукивании геологическим молотком или оборке заколов издается резкий звенящий звук.";
-    public String tex2 = "Прочный, крупноблочный массив с закругленными гранями. Поверхность трещин гладкая, скользкая, с глинистым заполнителем. Склонность к выскальзыванию блоков.";
-    public String tex3 = "Непрочный, мелкоблочный, микротрещиноватый, перемятый массив. Наличие крупных разломов, пересекающих все сечение выработки. " +
-            "Разломы и трещины заполнены глинистым чешуйчатым материалом. Заполнитель набухает и размягчается при обводнении.  Склонен к заколообразованию. ";
-    public String tex4 = "Чередование вязких, тонкослоистых мягких пород светло-серого цвета с непрочными разрыхлёнными блоками. Наличие вкрапленной минерализации. " +
-            "Геологический молоток или другой острый инструмент легко втыкается в массив. При обводнении массив набухает и переходит в ползучее состояние.";
-    public String tex5 = "Чередование тонких прослоев сильно трещиноватой руды и глинистого материала с минерализацией. " +
-            "Геологический молоток или другой острый инструмент легко втыкается в глинистые прослои. При обводнении массив набухает и переходит в ползучее состояние.";
-    public String tex6 = "Прочный, слоистый массив руды с поперечными трещинами. Вдоль напластования присутствуют редкие прослои глинистого материала. " +
-            "При простукивании геологическим молотком издается резкий звенящий звук.";
+    public String tex1 = "Очень прочный, крупноблочный, угловатый массив. После отпалки поверхность рваная." +
+            " Поверхность трещин шероховатая, цепкая, с редким заполнителем. Блоки зажаты. При простукивании геологическим молотком или оборке заколов издается резкий звенящий звук.";
+    public String tex2 = "Непрочный слоистый массив. Наличие крупных разломов, пересекающих все сечение выработки. Разломы и трещины заполнены глинистым чешуйчатым материалом. " +
+            "Заполнитель набухает и размягчается при обводнении.  Склонен к заколообразованию.";
+    public String tex3 = "Мягкий тонкослоистый массив. Пластины легко отделяются друг от друга под ударами геологического молотка. " +
+            "Большая доля в составе пород чешуйчатых минералов. Четко выраженные анизотропные свойства.";
+    public String tex4 = "Сплошной или блочный массив. Плотная зажатая структура.  При простукивании геологическим молотком или оборке заколов издается резкий звенящий звук.";
+    public String tex5 = "Разноориентированные разломы на коротком интервале горной выработки. Разломы с мягким чешуйчатым заполнителем, при обводнении высыпаются в выработку.";
+    public String tex6 = "Сыпучая структура, плохо связанные минеральные зерна. Зеркала скольжения.";
     @FXML
     void initialize() {
 
         setupImageHandlers();
-
+        cbcloi.getItems().addAll("Вдоль", "Вкрест");
+        cbcloi.setVisible(false);
         dlina.setTextFormatter(new TextFormatter<>(change -> {
             // Всегда корректируем start и end
             int start = Math.min(change.getRangeStart(), change.getRangeEnd());
@@ -95,7 +88,7 @@ public class GeologCOD extends Configs {
         }));
         viborKatigorii();
         tabl.setOnMouseClicked(mouseEvent -> openNewScene("/com/example/proburok/app.fxml"));
-        pethat.setOnMouseClicked(mouseEvent -> openNewScene("/com/example/proburok/Pehat.fxml"));
+
 
         DatabaseHandler dbHandler = new DatabaseHandler();
         ObservableList<Baza> bazas = dbHandler.getAllBaza();
@@ -144,17 +137,17 @@ public class GeologCOD extends Configs {
 
                 if (kategoriyaValue == null || kategoriyaValue.isEmpty()) { errors.append("- Не заполнено поле категория \n"); }
                 if (opisanieValue == null || opisanieValue.isEmpty()) {errors.append("- Не заполнено поле описание\n");}
-
+                if (kategoriyaValue.equals("3") && cbcloi.getValue()==null || cbcloi.getValue().isEmpty()){errors.append("- Не выбрана слоистость \n");}
 
                 // Если есть ошибки - показываем их
                 if (errors.length() > 0) {showAlert("Заполните обязательные поля:\n" + errors.toString());
                     return;
                 }
                 // Все данные валидны - выполняем сохранение
-                getPas(kategoriyaValue);
-                String prim =  "Все данные внесены" ;
-                new DatabaseHandler().DobavlenieGEOLOG(kategoriyaValue, opisanieValue,tippas,dlinaValue, selectedGor, selectedName,prim);
-                System.out.println("ТИПОВОЙ ПАСПОРТ= "+tippas);
+                faktorpoisk(kategoriyaValue);
+                String prim =  "Требуется геомеханическое описание" ;
+                new DatabaseHandler().DobavlenieGEOLOG(kategoriyaValue, opisanieValue,cbcloi.getValue(),dlinaValue, selectedGor, selectedName,this.faktor,this.opisFaktor,prim)    ;
+                System.out.println("ТИПОВОЙ ПАСПОРТ= "+this.faktor+this.opisFaktor);
                 ohistka();
               // gorbox.setValue(null);
             }  catch (Exception e) {
@@ -181,8 +174,8 @@ public class GeologCOD extends Configs {
             klikKatigorii(B6,"6","no",tex6,"no");
         }else {
             klikKatigorii(B1,"1","no",tex1,"no");
-            klikKatigorii(B2,"2","yes",tex2,"yes");
-            klikKatigorii(B3,"3","no",tex3,"yes");
+            klikKatigorii(B2,"2","no",tex2,"yes");
+            klikKatigorii(B3,"3","yes",tex3,"yes");
             klikKatigorii(B4,"4","no",tex4,"no");
             klikKatigorii(B5,"5","no",tex5,"no");
             klikKatigorii(B6,"6","no",tex6,"no");
@@ -193,6 +186,13 @@ public class GeologCOD extends Configs {
         imageView.setOnMouseClicked(e -> {
             obnul(kat,tx);
             imageView.setStyle(red);
+            if (x.equals("yes")){
+                cbcloi.setVisible(true);
+                cbcloi.setValue("");
+            }else {
+                cbcloi.setVisible(false);
+                cbcloi.setValue("-");
+            }
         });
     }
 
@@ -265,18 +265,23 @@ public class GeologCOD extends Configs {
             } else {
                 katigoria.setText("");
             }
+            if (poluh.getSLOI() != null) {
+                cbcloi.setValue(poluh.getSLOI());
+            } else {
+                cbcloi.setValue("");
+            }
 
             if ((katigoria.getText() ==null) || katigoria.getText().isEmpty() ){
                 obnul("x","");
                 System.out.println("Категории нет ");
             }else {
                 switch (katigoria.getText()){
-                    case"1" -> {obnul("x",opisanie.getText());B1.setStyle(red);}
-                    case"2" -> {obnul("x",opisanie.getText());B2.setStyle(red);}
-                    case"3" -> {obnul("x",opisanie.getText());B3.setStyle(red);}
-                    case"4" -> {obnul("x",opisanie.getText());B4.setStyle(red);}
-                    case"5" ->{obnul("x",opisanie.getText());B5.setStyle(red);}
-                    case"6" -> {obnul("x",opisanie.getText());B6.setStyle(red);}
+                    case"1" -> {obnul("x",opisanie.getText());B1.setStyle(red);cbcloi.setVisible(false);}
+                    case"2" -> {obnul("x",opisanie.getText());B2.setStyle(red);cbcloi.setVisible(false);}
+                    case"3" -> {obnul("x",opisanie.getText());B3.setStyle(red);cbcloi.setVisible(true);}
+                    case"4" -> {obnul("x",opisanie.getText());B4.setStyle(red);cbcloi.setVisible(false);}
+                    case"5" ->{obnul("x",opisanie.getText());B5.setStyle(red);cbcloi.setVisible(false);}
+                    case"6" -> {obnul("x",opisanie.getText());B6.setStyle(red);cbcloi.setVisible(false);}
 
                 }}
 
@@ -301,6 +306,9 @@ public class GeologCOD extends Configs {
         PlanVKL.setVisible(false);PlanVKLNe.setVisible(true);
         PoperVKL.setVisible(false);PoperVKLNe.setVisible(true);
         ProdolVKL.setVisible(false);ProdolVKLNe.setVisible(true);
+        cbcloi.setVisible(false);
+        this.faktor="";
+        this.opisFaktor="";
     }
 
     void proverkaImageGeolg(String imagePath,ImageView VKL,ImageView VKLNE) {
@@ -331,72 +339,19 @@ public class GeologCOD extends Configs {
             VKL.setVisible(false);VKLNE.setVisible(true);
         }
     }
-
-
-    private void getPas (String kategor) {
-        String kat = katigoria.getText();
-        String id=idi.getText();
-        String Nopas = "Типовой паспорт не разработан";
-        if (id == null) {
-            tippas = "Типовой паспорт не разработан";
-            return;
+    private void faktorpoisk (String kat) throws ParseException {
+        // Проверка входных данных
+        if (kat == null || kat.isEmpty()) {
+            throw new IllegalArgumentException("Значение list не может быть пустым");
         }
-        if (!kat.isEmpty()){
-
-            switch (id) {
-                case "1" -> TP_1_6(kat,"1","9","21","33","43","53");
-                case "2" ->TP_1_6(kat,"2","10","22","34","44","54");
-                case "3" ->TP_1_6(kat,"3","11","23","35","45","55");
-                case "4" ->TP_1_6(kat,"4","12","24","36","46","56");
-                case "5" ->TP_1_6(kat,Nopas,"13","25","37","47","57");
-                case "6" ->TP_1_6(kat,"5","14","26","38","48","58");
-                case "7" ->TP_1_6(kat,"6","15","27","39","49","59");
-                case "8" ->TP_1_6(kat,Nopas,"16","28","40","50","60");
-                case "9" ->TP_1_6(kat,Nopas,"17","29","41","51","61");
-                case "10" ->TP_1_6(kat,"7","18","30","42","52","62");
-                case "11" ->TP_1_6(kat,"8","19","31",Nopas,Nopas,"63");
-                case "12" ->TP_1_6(kat,Nopas,"64","66","68","70","72");
-                case "13" ->TP_1_6(kat,Nopas,"65","67","69","71","73");
-
-                case "14" ->TP_1_6(kat,"1","5","9","13","17","19");
-                case "15" ->TP_1_6(kat,"2","6","10","14","18","20");
-                case "16" ->TP_1_6(kat,"3","7","11","15",Nopas,Nopas);
-                case "17" ->TP_1_6(kat,"4","8","12","16",Nopas,Nopas);
-
-                default -> throw new IllegalStateException("Unexpected value: " + kategor);
-            }}
-        }
-
-    private void TP_1_6 (String kat,String x1,String x2,String x3,String x4,String x5,String x6) {
-
         switch (kat) {
-            case "1" -> tippas=x1;
-            case "2" ->tippas=x2;
-            case "3" ->tippas=x3;
-            case "4" -> tippas=x4;
-            case "5" ->tippas=x5;
-            case "6" -> tippas=x6;
 
-            default -> tippas = "Типовой паспорт не разработан";
+            case "3" -> {this.faktor = "Г";this.opisFaktor = "Взаимная ориентация направления проходки и слоистости горных пород.";}
+            case "4","5","6" -> {this.faktor = "Б";this.opisFaktor = "Разуплотнение горного массива при сейсмическом воздействии от взрывных работ.\n";}
+
+
 
         }
     }
-    private void TP_SOPR (String SH,String x12_8_12_8,String x3_7_3_7,String x3_7_2_5,String x14_7_14_7,String x8_5_8_5,String x5_8_5_8,String x12_8012_8) {
-
-        switch (SH) {
-
-            case "12.8/12.8" -> tippas=x12_8_12_8;
-            case "3.7/3.7" -> tippas=x3_7_3_7;
-            case "3.7/2.5" -> tippas=x3_7_2_5;
-            case "14.7/14.7" -> tippas=x14_7_14_7;
-            case "8.5/8.5" -> tippas=x8_5_8_5;
-            case "5.8/5.8" -> tippas=x5_8_5_8;
-            case "12.8|12.8" -> tippas=x12_8012_8;
-
-            default -> tippas = "Типовой паспорт не разработан";
-
-        }
-    }
-
-    }
+}
 

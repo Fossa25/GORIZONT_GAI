@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1060.0" prefWidth="1217.0" style="-fx-background-color: #eef2f3;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.proburok.GeomexCOD">
+    <children>
+        <TextField fx:id="privaz" editable="false" layoutX="518.0" layoutY="120.0" prefHeight="43.0" prefWidth="510.0" promptText="ПРИВЯЗКА">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </TextField>
+        <TextField fx:id="nomer" editable="false" layoutX="250.0" layoutY="120.0" prefHeight="43.0" prefWidth="221.0" promptText="№ ПАСПОРТА">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </TextField>
+        <Button fx:id="singUpButtun" layoutX="459.0" layoutY="890.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="161.0" style="-fx-background-color: #aa9455; -fx-background-radius: 20px;" text="Сохранить данные" textFill="WHITE">
+            <font>
+                <Font name="Verdana" size="14.0" />
+            </font>
+        </Button>
+        <ComboBox fx:id="gorbox" editable="true" layoutX="250.0" layoutY="50.0" prefHeight="43.0" prefWidth="221.0" promptText="ГОРИЗОНТ" />
+
+        <Accordion layoutX="479.0" layoutY="436.0" />
+        <TextField fx:id="katigoria" editable="false" layoutX="250.0" layoutY="190.0" prefHeight="43.0" prefWidth="221.0" promptText="ГЕОЛГ. КЛАСС УСТОЙЧИВОСТИ">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </TextField>
+        <ComboBox fx:id="namebox" editable="true" layoutX="518.0" layoutY="50.0" prefHeight="43.0" prefWidth="510.0" promptText="НАЗВАНИЕ ГОРНОЙ ВЫРАБОТКИ" />
+      <Button fx:id="butnA" layoutX="250.0" layoutY="405.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-radius: 50px; -fx-background-color: #5e5d5d;" text="А" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Verdana" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="butnB" layoutX="250.0" layoutY="485.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-radius: 50px; -fx-background-color: #5e5d5d;" text="Б" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Verdana" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="butnV" layoutX="250.0" layoutY="565.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-radius: 50px; -fx-background-color: #5e5d5d;" text="В" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Verdana" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="butnN" layoutX="250.0" layoutY="805.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-radius: 50px; -fx-background-color: #5e5d5d;" text="-" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Verdana" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <TextField fx:id="texfak" editable="false" layoutX="249.0" layoutY="890.0" prefHeight="43.0" prefWidth="161.0" />
+      <Label layoutX="250.0" layoutY="339.0" prefHeight="43.0" prefWidth="470.0" text="ВЛИЯЮЩИЕ НА УСТОЙЧИВОСТЬ ТЕХНОЛОГИЧЕСКИЕ ФАКТОРЫ" wrapText="true">
+         <font>
+            <Font name="Verdana" size="14.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="opisanie" editable="false" layoutX="518.0" layoutY="189.0" prefHeight="45.0" prefWidth="510.0" promptText="ГЕОЛОГИЧЕСКОЕ ОПИСАНИЕ" wrapText="true">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextArea>
+      <TextField fx:id="dlina" editable="false" layoutX="250.0" layoutY="260.0" prefHeight="43.0" prefWidth="221.0" promptText="ДЛИНА ВЫРАБОТКИ">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
+      <ImageView fx:id="dokumGeolog" fitHeight="61.0" fitWidth="58.0" layoutX="488.0" layoutY="973.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assets/iconGeolog.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="dokumGeolog11" fitHeight="61.0" fitWidth="58.0" layoutX="576.0" layoutY="973.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assets/texuslovi.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="tabl" fitHeight="61.0" fitWidth="58.0" layoutX="664.0" layoutY="973.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assets/BDA.jpg" />
+         </image>
+      </ImageView>
+      <AnchorPane prefHeight="1060.0" prefWidth="202.0" style="-fx-background-color: #ffffff;">
+         <children>
+            <ImageView fitHeight="100.0" fitWidth="206.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@assets/IMG_4772.JPG" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="85.0" fitWidth="202.0" layoutY="193.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@assets/ProhodN.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="85.0" fitWidth="202.0" layoutY="265.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@assets/GeologN.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="85.0" fitWidth="202.0" layoutY="337.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@assets/GeomexA.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="instr" fitHeight="61.0" fitWidth="58.0" layoutX="16.0" layoutY="970.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@assets/instr.jpg" />
+               </image>
+            </ImageView>
+            <ComboBox fx:id="ugli" editable="true" layoutX="21.0" layoutY="602.0" prefHeight="43.0" prefWidth="78.0" promptText="УГОЛ" visible="false" />
+            <ImageView fx:id="pethat" fitHeight="61.0" fitWidth="58.0" layoutX="73.0" layoutY="714.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@assets/pehat.jpg" />
+               </image>
+            </ImageView>
+            <TextField fx:id="idi" layoutX="45.0" layoutY="129.0" prefHeight="43.0" prefWidth="113.0" promptText="id">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </TextField>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="fotomenu" layoutX="787.0" layoutY="335.0" prefHeight="285.0" prefWidth="238.0" style="-fx-background-color: #eef2f3;">
+         <children>
+              <Label layoutX="77.0" layoutY="69.0" prefHeight="43.0" prefWidth="130.0" text="План выработки">
+                  <font>
+                      <Font name="Verdana" size="14.0" />
+                  </font>
+              </Label>
+              <ImageView fx:id="PlanVKL" fitHeight="50.0" fitWidth="50.0" layoutX="16.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <image>
+                      <Image url="@assets/silkaSA.jpg" />
+                  </image>
+              </ImageView>
+              <ImageView fx:id="PlanVKLNe" fitHeight="50.0" fitWidth="50.0" layoutX="16.0" layoutY="64.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                      <Image url="@assets/silkaSN.jpg" />
+                  </image>
+              </ImageView>
+              <Label layoutX="77.0" layoutY="139.0" prefHeight="43.0" prefWidth="146.0" text="Поперечный разрез">
+                  <font>
+                      <Font name="Verdana" size="14.0" />
+                  </font>
+              </Label>
+              <ImageView fx:id="PoperVKL" fitHeight="50.0" fitWidth="50.0" layoutX="16.0" layoutY="131.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <image>
+                      <Image url="@assets/silkaSA.jpg" />
+                  </image>
+              </ImageView>
+              <ImageView fx:id="PoperVKLNe" fitHeight="50.0" fitWidth="50.0" layoutX="16.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                      <Image url="@assets/silkaSN.jpg" />
+                  </image>
+              </ImageView>
+              <Label layoutX="77.0" layoutY="209.0" prefHeight="43.0" prefWidth="146.0" text="Продольный разрез">
+                  <font>
+                      <Font name="Verdana" size="14.0" />
+                  </font>
+              </Label>
+              <ImageView fx:id="ProdolVKL" fitHeight="50.0" fitWidth="50.0" layoutX="16.0" layoutY="201.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                  <image>
+                      <Image url="@assets/silkaSA.jpg" />
+                  </image>
+              </ImageView>
+              <ImageView fx:id="ProdolVKLNe" fitHeight="50.0" fitWidth="50.0" layoutX="16.0" layoutY="204.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                      <Image url="@assets/silkaSN.jpg" />
+                  </image>
+              </ImageView>
+              <Label layoutX="16.0" layoutY="7.0" prefHeight="43.0" prefWidth="206.0" text="ГРАФИЧЕСКИЕ МАТЕРИАЛЫ" wrapText="true">
+                  <font>
+                      <Font name="Verdana" size="14.0" />
+                  </font>
+              </Label>
+         </children>
+      </AnchorPane>
+      <TextArea fx:id="opisanieA" editable="false" layoutX="331.0" layoutY="400.0" prefHeight="60.0" prefWidth="420.0" promptText="Горная выработка пройдет в разуплотненном массиве из-за его подработки." wrapText="true">
+         <font>
+            <Font name="Verdana" size="14.0" />
+         </font>
+      </TextArea>
+      <TextArea fx:id="opisanieB" editable="false" layoutX="331.0" layoutY="480.0" prefHeight="60.0" prefWidth="420.0" promptText="На устойчивость горной выработки будет оказывать влияние сейсмическое воздействие от ведения взрывных работ. " wrapText="true">
+         <font>
+            <Font name="Verdana" size="14.0" />
+         </font>
+      </TextArea>
+      <TextArea fx:id="opisanieV" editable="false" layoutX="330.0" layoutY="560.0" prefHeight="60.0" prefWidth="420.0" promptText="Горная выработка пройдет в массиве с высоким горным давлением. " wrapText="true">
+         <font>
+            <Font name="Verdana" size="14.0" />
+         </font>
+      </TextArea>
+      <TextArea fx:id="opisanieN" editable="false" layoutX="331.0" layoutY="800.0" prefHeight="60.0" prefWidth="420.0" promptText="Технологические факторы не влияют на устойчивость" wrapText="true">
+         <font>
+            <Font name="Verdana" size="14.0" />
+         </font>
+      </TextArea>
+      <Button fx:id="butnG" layoutX="250.0" layoutY="645.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-radius: 50px; -fx-background-color: #5e5d5d;" text="Г" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Verdana" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <TextArea fx:id="opisanieG" editable="false" layoutX="331.0" layoutY="640.0" prefHeight="60.0" prefWidth="420.0" promptText="Горная выработка пройдет в массиве с высоким горным давлением. " wrapText="true">
+         <font>
+            <Font name="Verdana" size="14.0" />
+         </font>
+      </TextArea>
+      <Button fx:id="butnD" layoutX="250.0" layoutY="725.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-radius: 50px; -fx-background-color: #5e5d5d;" text="Д" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Verdana" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <TextArea fx:id="opisanieD" editable="false" layoutX="330.0" layoutY="720.0" prefHeight="60.0" prefWidth="420.0" promptText="Горная выработка пройдет в массиве с высоким горным давлением. " wrapText="true">
+         <font>
+            <Font name="Verdana" size="14.0" />
+         </font>
+      </TextArea>
+    </children>
+</AnchorPane>

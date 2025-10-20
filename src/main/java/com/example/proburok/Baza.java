@@ -20,6 +20,10 @@ public class Baza {
     private String PRIM;
     private String NAME_BD;
     private String IDI;
+    private String WID;
+    private String HID;
+    private String TFOPISANIE;
+    private String SLOI;
 
     public Baza(Date DATA, String NOMER, String SEHEN, String GORIZONT, String NAME) {
         this.DATA = DATA;
@@ -36,7 +40,6 @@ public class Baza {
     public String getNOMER() {
         return NOMER;
     }
-
     public void setNOMER(String NOMER) {
         this.NOMER = NOMER;
     }
@@ -44,7 +47,6 @@ public class Baza {
     public Date getDATA() {
         return DATA;
     }
-
     public void setDATA(Date DATA) {
         this.DATA = DATA;
     }
@@ -52,7 +54,6 @@ public class Baza {
     public String getSEHEN() {
         return SEHEN;
     }
-
     public void setSEHEN(String SEHEN) {
         this.SEHEN = SEHEN;
     }
@@ -60,7 +61,6 @@ public class Baza {
     public String getGORIZONT() {
         return GORIZONT;
     }
-
     public void setGORIZONT(String GORIZONT) {
         this.GORIZONT = GORIZONT;
     }
@@ -68,28 +68,27 @@ public class Baza {
     public String getNAME() {
         return NAME;
     }
-
     public void setNAME(String NAME) {
         this.NAME = NAME;
     }
+
     public String getKATEGORII() {
         return KATEGORII;
     }
-
     public void setKATEGORII(String KATEGORII) {
         this.KATEGORII = KATEGORII;
     }
+
     public String getOPISANIE() {
         return OPISANIE;
     }
-
     public void setOPISANIE(String OPISANIE) {
         this.OPISANIE = OPISANIE;
     }
+
     public String getFAKTOR() {
         return FAKTOR;
     }
-
     public void setFAKTOR(String FAKTOR) {
         this.FAKTOR = FAKTOR;
     }
@@ -97,25 +96,21 @@ public class Baza {
     public void setTIPPAS(String TIPPAS) {
         this.TIPPAS = TIPPAS;
     }
-
     public String getTIPPAS() {
         return TIPPAS;
     }
 
     public void setPRIVIZKA(String  PRIVIZKA) {this. PRIVIZKA =  PRIVIZKA;}
-
     public String getPRIVIZKA() {
         return  PRIVIZKA;
     }
 
     public void setUGOL(String  UGOL) {this.UGOL =  UGOL;}
-
     public String getUGOL() {
         return  UGOL;
     }
 
     public void setDLINA(String  DLINA) {this.DLINA =  DLINA;}
-
     public String getDLINA() {
         return  DLINA;
     }
@@ -123,7 +118,6 @@ public class Baza {
     public String getUHASTOK() {
         return UHASTOK;
     }
-
     public void setUHASTOK(String uhastok) {
         this.UHASTOK = uhastok;
     }
@@ -131,7 +125,6 @@ public class Baza {
     public void setPRIM(String prim) {
         this.PRIM = prim;
     }
-
     public String getPRIM() {
         return PRIM;
     }
@@ -139,13 +132,30 @@ public class Baza {
     public void setNAME_BD(String nameBd) {
         this.NAME_BD = nameBd;
     }
-
     public String getNAME_BD() {
         return NAME_BD;
     }
-    public void setIDI(String  IDI) {this.IDI =  IDI;}
 
+    public void setIDI(String  IDI) {this.IDI =  IDI;}
     public String getIDI() {
         return  IDI;
     }
+
+    public void setWID(String  WID) {this.WID =  WID;}
+    public String getWID() {
+        return  WID;
+    }
+
+    public void setHID(String  HID) {this.HID =  HID;}
+    public String getHID() {
+        return  HID;
+    }
+
+    public void setTFOPISANIE(String tfopisanie) {this.TFOPISANIE = tfopisanie;}
+
+    public String getTFOPISANIE() {return TFOPISANIE;}
+
+    public void setSLOI(String SLOI) {this.SLOI = SLOI;}
+
+    public String getSLOI() {return SLOI;}
 }

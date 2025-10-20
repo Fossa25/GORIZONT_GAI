@@ -21,13 +21,18 @@ public class HomeController {
     @FXML private TableColumn<Baza, String> nameCtolb;
     @FXML private TableColumn<Baza, String> nomerCtolb;
     @FXML private TableColumn<Baza, String> sehenCtolb;
-  //  @FXML private TableColumn<Baza, String> faktorCtolb;
-    @FXML private TableColumn<Baza, String> kftegoriiCtolb;
+     @FXML private TableColumn<Baza, String> kftegoriiCtolb;
     @FXML private TableColumn<Baza, String> opisanieCtolb;
     @FXML private TableColumn<Baza, String> tippasCtolb;
     @FXML private TableColumn<Baza, String> privizkaCtolb;
     @FXML private TableColumn<Baza, String> dlinaCtolb;
     @FXML private TableColumn<Baza, String> PRIMCtolb;
+    @FXML private TableColumn<Baza, String> widCtolb;
+    @FXML private TableColumn<Baza, String> hitCtolb;
+    @FXML private TableColumn<Baza, String> sloiCtolb;
+    @FXML private TableColumn<Baza, String> faktorCtolb;
+    @FXML private TableColumn<Baza, String> faktoropisCtolb;
+
     @FXML private ComboBox<String> filterComboBox;
     @FXML private ComboBox<String> filterComboBox1;
     private DatabaseHandler dbHandler;
@@ -39,11 +44,15 @@ public class HomeController {
         nomerCtolb.setCellValueFactory(new PropertyValueFactory<>("NOMER"));
         dataCtolb.setCellValueFactory(new PropertyValueFactory<>("DATA"));
         gorizontCtolb.setCellValueFactory(new PropertyValueFactory<>("GORIZONT"));
+        widCtolb.setCellValueFactory(new PropertyValueFactory<>("WID"));
+        hitCtolb.setCellValueFactory(new PropertyValueFactory<>("HID"));
         sehenCtolb.setCellValueFactory(new PropertyValueFactory<>("SEHEN"));
         nameCtolb.setCellValueFactory(new PropertyValueFactory<>("NAME_BD"));
         kftegoriiCtolb.setCellValueFactory(new PropertyValueFactory<>("KATEGORII"));
         opisanieCtolb.setCellValueFactory(new PropertyValueFactory<>("OPISANIE"));
-    //    faktorCtolb.setCellValueFactory(new PropertyValueFactory<>("UGOL"));
+        sloiCtolb.setCellValueFactory(new PropertyValueFactory<>("SLOI"));
+        faktorCtolb.setCellValueFactory(new PropertyValueFactory<>("FAKTOR"));
+        faktoropisCtolb.setCellValueFactory(new PropertyValueFactory<>("TFOPISANIE"));
         tippasCtolb.setCellValueFactory(new PropertyValueFactory<>("TIPPAS"));
         privizkaCtolb.setCellValueFactory(new PropertyValueFactory<>("PRIVIZKA"));
         dlinaCtolb.setCellValueFactory(new PropertyValueFactory<>("DLINA"));

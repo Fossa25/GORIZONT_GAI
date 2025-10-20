@@ -18,7 +18,7 @@ public class Const {
     public static final String BAZA_PRIM="ПРИМИЧАНИЕ";
     public static final String BAZA_NAZVANIE_BD="НАЗВАНИЕ";
     public static final String BAZA_IDI="IDI";
-
+    public static final String BAZA_TFOPISANIE="ТФ_ОПИСАНИЕ";
     public static final String USER_TABLE="users";
     public static final String USER_ID="idusers";
     public static final String USER_FIRSTNAME="firstname";
@@ -28,4 +28,7 @@ public class Const {
     public static final String USER_LOCATION="location";
 
 
+    public static final String BAZA_WID = "ШИРИНА";
+    public static final String BAZA_HID = "ВЫСОТА";
+    public static final String BAZA_SLOI = "СЛОИСТОСТЬ";
 }
